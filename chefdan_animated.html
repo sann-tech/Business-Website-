@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChefDan Food Delivery - Food ready, Set, and Go</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Arial', sans-serif; scroll-behavior: smooth; }
+        .menu-item { transition: transform 0.3s; }
+        .menu-item:hover { transform: translateY(-10px); }
+        
+        /* Hero Section Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .hero-title {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .hero-subtitle {
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+        
+        .hero-buttons {
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+        
+        .hero-image {
+            animation: scaleIn 1s ease-out 0.3s backwards;
+        }
+        
+        .hero-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Menu Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .menu-item {
+            opacity: 0;
+            animation: slideInLeft 0.5s ease-out forwards;
+        }
+        
+        .menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item:nth-child(5) { animation-delay: 0.5s; }
+        .menu-item:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* About Section Animations */
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .about-text {
+            animation: slideInFromLeft 0.8s ease-out;
+        }
+        
+        .about-images {
+            animation: slideInFromRight 0.8s ease-out;
+        }
+        
+        .stat-item {
+            animation: countUp 0.6s ease-out forwards;
+        }
+        
+        .stat-item:nth-child(1) { animation-delay: 0.2s; opacity: 0; }
+        .stat-item:nth-child(2) { animation-delay: 0.4s; opacity: 0; }
+        .stat-item:nth-child(3) { animation-delay: 0.6s; opacity: 0; }
+        
+        /* Feature Cards Animation */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(50px);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .feature-card {
+            opacity: 0;
+            animation: bounceIn 0.6s ease-out forwards;
+        }
+        
+        .feature-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-card:nth-child(3) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <span class="text-3xl font-bold text-green-700">ChefDan</span>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="text-gray-700 hover:text-green-600 font-medium">Home</a>
+                <a href="#menu" class="text-gray-700 hover:text-green-600 font-medium">Menu</a>
+                <a href="#catering" class="text-gray-700 hover:text-green-600 font-medium">Catering</a>
+                <a href="#about" class="text-gray-700 hover:text-green-600 font-medium">About Us</a>
+                <a href="#contact" class="text-gray-700 hover:text-green-600 font-medium">Contact Us</a>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="location.href='#menu'" class="hidden sm:block bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">Order Now</button>
+                <button onclick="toggleCart()" class="relative bg-white text-green-600 px-4 py-2 rounded-full hover:bg-gray-50 border-2 border-green-600">
+                    🛒 <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">0</span>
+                </button>
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#home" onclick="toggleMobileMenu()" class="block text-gray-700 hover:text-green-600 font-medium">Home</a>
+                <a href="#menu" onclick="toggleMobileMenu()" class="block text-gray-700 hover:text-green-600 font-medium">Menu</a>
+                <a href="#catering" onclick="toggleMobileMenu()" class="block text-gray-700 hover:text-green-600 font-medium">Catering</a>
+                <a href="#about" onclick="toggleMobileMenu()" class="block text-gray-700 hover:text-green-600 font-medium">About Us</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="block text-gray-700 hover:text-green-600 font-medium">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 text-3xl">&times;</button>
+            </div>
+            <div id="cart-items" class="space-y-4 mb-6"></div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xl font-semibold">Total:</span>
+                    <span id="cart-total" class="text-2xl font-bold text-green-600">₱0</span>
+                </div>
+                <button onclick="showCheckout()" class="w-full bg-green-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-700 transition">
+                    Proceed to Checkout
+                </button>
+                <button onclick="clearCart()" class="w-full mt-2 bg-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-600 transition">
+                    Clear Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Checkout</h2>
+                    <button onclick="closeCheckout()" class="text-gray-500 hover:text-gray-700 text-3xl">&times;</button>
+                </div>
+                
+                <form id="checkout-form" class="space-y-4">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                        <p class="text-sm text-blue-800">🔒 <strong>Security Notice:</strong> We will call you within 5 minutes to verify and confirm your order details.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Full Name *</label>
+                            <input type="text" id="customer-name" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Juan Dela Cruz">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Phone Number *</label>
+                            <input type="tel" id="phone" required pattern="[0-9]{11}" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="09123456789">
+                            <p class="text-xs text-gray-500 mt-1">📞 We will call this number to confirm</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Complete Delivery Address *</label>
+                        <input type="text" id="address-street" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600 mb-2" placeholder="House No., Street Name">
+                        <input type="text" id="address-barangay" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600 mb-2" placeholder="Barangay">
+                        <input type="text" id="address-landmark" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Landmark (e.g., near 7-Eleven)">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Email (Optional)</label>
+                        <input type="email" id="customer-email" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="your@email.com">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Payment Method *</label>
+                        <select id="payment-method" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600">
+                            <option value="">Select payment method</option>
+                            <option value="gcash">GCash</option>
+                            <option value="paymaya">PayMaya</option>
+                            <option value="bank">Bank Transfer</option>
+                            <option value="cod">Cash on Delivery (Min. ₱500)</option>
+                        </select>
+                    </div>
+
+                    <div id="deposit-notice" class="hidden bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p class="text-sm text-yellow-800">⚠️ <strong>Large Combo Orders require 50% deposit</strong> to confirm order. Payment details will be sent after verification.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Special Instructions (Optional)</label>
+                        <textarea id="special-instructions" rows="3" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Delivery time preference, special requests, etc."></textarea>
+                    </div>
+
+                    <div class="border-t pt-4">
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between text-gray-700">
+                                <span>Subtotal:</span>
+                                <span id="checkout-subtotal" class="font-semibold">₱0</span>
+                            </div>
+                            <div class="flex justify-between text-gray-700">
+                                <span>Delivery Fee:</span>
+                                <span class="font-semibold">₱50</span>
+                            </div>
+                            <div class="flex justify-between text-xl font-bold text-green-600">
+                                <span>Total:</span>
+                                <span id="checkout-total">₱0</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-green-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-700 transition text-lg">
+                            Place Order
+                        </button>
+                        <p class="text-xs text-center text-gray-500 mt-3">📞 We will call you within 5 minutes to confirm your order</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Cart Confirmation Modal -->
+    <div id="clear-cart-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-md w-full">
+            <div class="p-6">
+                <div class="flex justify-center mb-4">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                        <svg class="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Clear Cart?</h3>
+                <p class="text-center text-gray-600 mb-6">Are you sure you want to remove all items from your cart? This action cannot be undone.</p>
+                
+                <div class="flex gap-3">
+                    <button onclick="closeClearCartModal()" class="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
+                        Cancel
+                    </button>
+                    <button onclick="confirmClearCart()" class="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition">
+                        Clear Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Catering Booking Modal -->
+    <div id="booking-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Book Catering Service</h2>
+                    <button onclick="closeBooking()" class="text-gray-500 hover:text-gray-700 text-3xl">&times;</button>
+                </div>
+                
+                <form id="booking-form" class="space-y-4">
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4">
+                        <p class="text-sm text-purple-800">📅 <strong>Event Type:</strong> <span id="event-type-display" class="font-semibold"></span></p>
+                        <p class="text-sm text-purple-800 mt-2">💰 <strong>50% deposit required</strong> to confirm booking</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Full Name *</label>
+                            <input type="text" id="booking-name" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Juan Dela Cruz">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Phone Number *</label>
+                            <input type="tel" id="booking-phone" required pattern="[0-9]{11}" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="09123456789">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Email *</label>
+                        <input type="email" id="booking-email" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="your@email.com">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Event Date *</label>
+                            <input type="date" id="booking-date" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Event Time *</label>
+                            <input type="time" id="booking-time" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Number of Guests *</label>
+                        <input type="number" id="booking-guests" required min="20" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="e.g., 50">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Venue Address *</label>
+                        <input type="text" id="booking-venue-street" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600 mb-2" placeholder="Venue Name or Address">
+                        <input type="text" id="booking-venue-city" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="City/Municipality">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Menu Preference</label>
+                        <select id="booking-menu" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600">
+                            <option value="">Select package (optional)</option>
+                            <option value="standard">Standard Package - Filipino Favorites</option>
+                            <option value="premium">Premium Package - International Cuisine</option>
+                            <option value="deluxe">Deluxe Package - Gourmet Selection</option>
+                            <option value="custom">Custom Menu - Will discuss</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Special Requests</label>
+                        <textarea id="booking-requests" rows="3" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Dietary restrictions, theme, special setups, etc."></textarea>
+                    </div>
+
+                    <div class="border-t pt-4">
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-yellow-800">ℹ️ Final pricing will be provided after consultation based on your specific requirements.</p>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-green-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-700 transition text-lg">
+                            Submit Booking Request
+                        </button>
+                        <p class="text-xs text-center text-gray-500 mt-3">📞 We will contact you within 24 hours to confirm details and pricing</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Catering Booking Confirmation Modal -->
+    <div id="booking-confirmation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div class="p-8">
+                <div class="flex justify-center mb-6">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
+                        <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-2">Booking Request Received!</h2>
+                <p class="text-center text-gray-600 mb-6">Thank you for choosing ChefDan Catering 🎉</p>
+
+                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4 text-lg">Booking Details</h3>
+                    <div class="space-y-3 text-gray-700">
+                        <div class="flex items-start">
+                            <span class="font-medium w-40">Event Type:</span>
+                            <span id="bc-event-type" class="font-semibold text-green-600"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-40">Date & Time:</span>
+                            <span id="bc-datetime"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-40">Number of Guests:</span>
+                            <span id="bc-guests"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-40">Venue:</span>
+                            <span id="bc-venue"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-40">Menu Preference:</span>
+                            <span id="bc-menu"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4 text-lg">Contact Information</h3>
+                    <div class="space-y-3 text-gray-700">
+                        <div class="flex items-start">
+                            <span class="font-medium w-32">Name:</span>
+                            <span id="bc-name"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-32">Phone:</span>
+                            <span id="bc-phone"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-32">Email:</span>
+                            <span id="bc-email"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
+                    <p class="text-purple-800 text-center">
+                        <strong>📞 Our team will contact you within 24 hours</strong><br>
+                        <span class="text-sm">to discuss final details, confirm pricing, and arrange the 50% deposit.</span>
+                    </p>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                    <p class="text-sm text-green-800 text-center">
+                        💰 <strong>Deposit Information:</strong> A 50% deposit is required to confirm your booking. Payment instructions will be sent via email and SMS.
+                    </p>
+                </div>
+
+                <button onclick="closeBookingConfirmation()" class="w-full bg-green-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-700 transition text-lg">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="confirmation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div class="p-8">
+                <div class="flex justify-center mb-6">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
+                        <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-2">Order Confirmed!</h2>
+                <p class="text-center text-gray-600 mb-6">Thank you for choosing ChefDan 🍽️</p>
+
+                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4 text-lg">Order Details</h3>
+                    <div id="confirmation-items" class="space-y-2 mb-4"></div>
+                    
+                    <div class="border-t pt-4 space-y-2">
+                        <div class="flex justify-between text-gray-700">
+                            <span>Subtotal:</span>
+                            <span id="confirmation-subtotal" class="font-semibold">₱0</span>
+                        </div>
+                        <div class="flex justify-between text-gray-700">
+                            <span>Delivery Fee:</span>
+                            <span class="font-semibold">₱50</span>
+                        </div>
+                        <div class="flex justify-between text-xl font-bold text-green-600">
+                            <span>Total:</span>
+                            <span id="confirmation-total">₱0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4 text-lg">Delivery Information</h3>
+                    <div class="space-y-3 text-gray-700">
+                        <div class="flex items-start">
+                            <span class="font-medium w-32">Name:</span>
+                            <span id="confirmation-name"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-32">Phone:</span>
+                            <span id="confirmation-phone"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-32">Address:</span>
+                            <span id="confirmation-address"></span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="font-medium w-32">Payment:</span>
+                            <span id="confirmation-payment" class="uppercase font-semibold text-green-600"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="confirmation-deposit" class="hidden bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-6">
+                    <p class="text-sm text-yellow-800 font-semibold">⚠️ 50% DEPOSIT REQUIRED FOR LARGE COMBO</p>
+                    <p class="text-sm text-yellow-700 mt-2">Deposit Amount: <span id="confirmation-deposit-amount" class="font-bold">₱0</span></p>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                    <p class="text-green-800 text-center">
+                        <strong>📞 We will call <span id="confirmation-phone-repeat"></span> within 5 minutes</strong><br>
+                        <span class="text-sm">to verify your order and provide payment instructions.</span>
+                    </p>
+                </div>
+
+                <button onclick="closeConfirmation()" class="w-full bg-green-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-700 transition text-lg">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <section id="home" class="pt-32 pb-20 bg-gradient-to-br from-green-50 to-green-100">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="hero-title text-5xl font-bold text-gray-900 mb-6">Food ready,<br><span class="text-green-600">Set, and Go.</span></h1>
+                <p class="hero-subtitle text-xl text-gray-600 mb-8">Delicious meals delivered right to your doorstep.</p>
+                <div class="hero-buttons flex space-x-4">
+                    <button onclick="location.href='#menu'" class="bg-green-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-700">Browse Menu</button>
+                    <button onclick="location.href='#about'" class="bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-50 border-2 border-green-600">Learn More</button>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="hero-image w-80 h-80 bg-white rounded-full shadow-2xl flex items-center justify-center">
+                    <svg class="hero-icon w-48 h-48 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose ChefDan?</h2>
+                <p class="text-xl text-gray-600">We make food delivery simple and delicious</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card text-center p-8 rounded-xl bg-green-50 hover:shadow-xl transition cursor-pointer transform hover:scale-105">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Fast Delivery</h3>
+                    <p class="text-gray-600">Your food delivered hot and fresh in 30 minutes or less</p>
+                </div>
+                <div class="feature-card text-center p-8 rounded-xl bg-green-50 hover:shadow-xl transition cursor-pointer transform hover:scale-105">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Quality Food</h3>
+                    <p class="text-gray-600">Made with the freshest ingredients by expert chefs</p>
+                </div>
+                <div class="feature-card text-center p-8 rounded-xl bg-green-50 hover:shadow-xl transition cursor-pointer transform hover:scale-105">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Best Prices</h3>
+                    <p class="text-gray-600">Affordable meals without compromising on quality</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-4">Our Menu</h2>
+            <p class="text-xl text-center text-gray-600 mb-12">Check out our delicious selection</p>
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterMenu('all')" class="category-btn bg-green-600 text-white px-6 py-3 rounded-full font-semibold">All</button>
+                <button onclick="filterMenu('mains')" class="category-btn bg-white text-green-600 px-6 py-3 rounded-full font-semibold border-2 border-green-600">Mains</button>
+                <button onclick="filterMenu('sides')" class="category-btn bg-white text-green-600 px-6 py-3 rounded-full font-semibold border-2 border-green-600">Sides</button>
+                <button onclick="filterMenu('desserts')" class="category-btn bg-white text-green-600 px-6 py-3 rounded-full font-semibold border-2 border-green-600">Desserts</button>
+                <button onclick="filterMenu('combo')" class="category-btn bg-white text-green-600 px-6 py-3 rounded-full font-semibold border-2 border-green-600">Combo Meals</button>
+            </div>
+            <div id="menu-grid" class="grid md:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="about-text">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">About ChefDan</h2>
+                    <p class="text-lg text-gray-600 mb-6">Founded with a passion for bringing delicious meals to your doorstep, ChefDan has been serving the community since 2020.</p>
+                    <p class="text-lg text-gray-600 mb-6">Our expert chefs prepare every dish with the finest ingredients, ensuring quality and customer satisfaction.</p>
+                    <div class="grid grid-cols-3 gap-4 mt-8">
+                        <div class="stat-item text-center"><div class="text-3xl font-bold text-green-600">5000+</div><div class="text-gray-600">Customers</div></div>
+                        <div class="stat-item text-center"><div class="text-3xl font-bold text-green-600">50+</div><div class="text-gray-600">Menu Items</div></div>
+                        <div class="stat-item text-center"><div class="text-3xl font-bold text-green-600">4.9★</div><div class="text-gray-600">Rating</div></div>
+                    </div>
+                </div>
+                <div class="about-images grid grid-cols-2 gap-4">
+                    <div class="h-64 bg-gradient-to-br from-green-400 to-green-600 rounded-xl"></div>
+                    <div class="h-64 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl mt-8"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catering" class="py-20 bg-gradient-to-br from-green-50 to-green-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Catering Services</h2>
+                <p class="text-xl text-gray-600">Make your events memorable with our premium catering</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition transform hover:scale-105">
+                    <div class="text-4xl mb-4">🎂</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Birthday Parties</h3>
+                    <p class="text-gray-600 mb-4">Complete packages for memorable celebrations</p>
+                    <ul class="text-gray-700 space-y-2 mb-6">
+                        <li>✓ Custom menu selection</li>
+                        <li>✓ Party decorations</li>
+                        <li>✓ Servers & setup crew</li>
+                        <li>✓ 20-100 guests</li>
+                    </ul>
+                    <p class="text-3xl font-bold text-green-600 mb-4">From ₱3,500</p>
+                    <button onclick="openBooking('Birthday Party')" class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700">Book Now</button>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition transform hover:scale-105">
+                    <div class="text-4xl mb-4">💼</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Corporate Events</h3>
+                    <p class="text-gray-600 mb-4">Professional catering for business gatherings</p>
+                    <ul class="text-gray-700 space-y-2 mb-6">
+                        <li>✓ Business lunch/dinner</li>
+                        <li>✓ Conference catering</li>
+                        <li>✓ Professional presentation</li>
+                        <li>✓ 30-200 guests</li>
+                    </ul>
+                    <p class="text-3xl font-bold text-green-600 mb-4">From ₱8,000</p>
+                    <button onclick="openBooking('Corporate Event')" class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700">Book Now</button>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition transform hover:scale-105">
+                    <div class="text-4xl mb-4">💑</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Weddings & Events</h3>
+                    <p class="text-gray-600 mb-4">Elegant buffets for your special day</p>
+                    <ul class="text-gray-700 space-y-2 mb-6">
+                        <li>✓ Custom wedding menus</li>
+                        <li>✓ Elegant presentation</li>
+                        <li>✓ Professional staff</li>
+                        <li>✓ 50-300 guests</li>
+                    </ul>
+                    <p class="text-3xl font-bold text-green-600 mb-4">From ₱15,000</p>
+                    <button onclick="openBooking('Wedding')" class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700">Book Now</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Why Choose Our Catering?</h3>
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-3xl mb-2">👨‍🍳</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Expert Chefs</h4>
+                        <p class="text-sm text-gray-600">Professional culinary team</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl mb-2">🍽️</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Premium Quality</h4>
+                        <p class="text-sm text-gray-600">Fresh, high-quality ingredients</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl mb-2">💰</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Flexible Packages</h4>
+                        <p class="text-sm text-gray-600">Customizable to your budget</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl mb-2">⭐</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">5-Star Service</h4>
+                        <p class="text-sm text-gray-600">Exceptional customer care</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-12">Contact Us</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <form id="contact-form" class="space-y-6">
+                    <div><input type="text" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Your Name"></div>
+                    <div><input type="email" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="your@email.com"></div>
+                    <div><input type="tel" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="+63 123 456 7890"></div>
+                    <div><textarea required rows="4" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Your message..."></textarea></div>
+                    <button type="submit" class="w-full bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700">Send Message</button>
+                </form>
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">📍</div>
+                        <div><h4 class="font-semibold text-gray-900">Address</h4><p class="text-gray-600">123 Food St, Caloocan City<br>Metro Manila, 1400</p></div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">📞</div>
+                        <div><h4 class="font-semibold text-gray-900">Phone</h4><p class="text-gray-600">+63 123 456 7890</p></div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">✉️</div>
+                        <div><h4 class="font-semibold text-gray-900">Email</h4><p class="text-gray-600">info@chefdan.ph</p></div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">🕐</div>
+                        <div><h4 class="font-semibold text-gray-900">Hours</h4><p class="text-gray-600">Mon-Sun: 10AM-10PM</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
+            <div><h3 class="text-2xl font-bold text-green-500 mb-4">ChefDan</h3><p class="text-gray-400">Food ready, Set, and Go.</p></div>
+            <div><h4 class="text-lg font-semibold mb-4">Links</h4><ul class="space-y-2 text-gray-400"><li><a href="#home" class="hover:text-green-500">Home</a></li><li><a href="#menu" class="hover:text-green-500">Menu</a></li><li><a href="#catering" class="hover:text-green-500">Catering</a></li><li><a href="#about" class="hover:text-green-500">About</a></li><li><a href="#contact" class="hover:text-green-500">Contact</a></li></ul></div>
+            <div><h4 class="text-lg font-semibold mb-4">Contact</h4><ul class="space-y-2 text-gray-400"><li>info@chefdan.ph</li><li>+63 123 456 7890</li></ul></div>
+            <div><h4 class="text-lg font-semibold mb-4">Follow Us</h4><div class="flex space-x-4"><a href="#" class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700">f</a></div></div>
+        </div>
+        <div class="text-center text-gray-400 mt-8 pt-8 border-t border-gray-800">&copy; 2026 ChefDan. All rights reserved.</div>
+    </footer>
+
+    <script>
+        const items = [
+            {name:'Grilled Chicken',cat:'mains',price:250,desc:'Tender chicken with herbs',grad:'from-orange-400 to-red-500'},
+            {name:'Beef Steak',cat:'mains',price:350,desc:'Premium beef grilled',grad:'from-red-400 to-pink-500'},
+            {name:'Pork Chop',cat:'mains',price:280,desc:'Juicy pork chop with gravy',grad:'from-pink-400 to-red-400'},
+            {name:'Pasta Carbonara',cat:'mains',price:220,desc:'Creamy pasta with bacon',grad:'from-yellow-400 to-orange-500'},
+            {name:'Fish Fillet',cat:'mains',price:280,desc:'Fresh fish with lemon sauce',grad:'from-blue-400 to-cyan-500'},
+            {name:'Fried Rice',cat:'mains',price:180,desc:'Garlic fried rice with vegetables',grad:'from-amber-400 to-yellow-500'},
+            {name:'Chicken Adobo',cat:'mains',price:240,desc:'Filipino classic adobo',grad:'from-orange-500 to-red-600'},
+            {name:'Sinigang na Baboy',cat:'mains',price:260,desc:'Sour pork soup',grad:'from-red-300 to-orange-400'},
+            {name:'Beef Kaldereta',cat:'mains',price:320,desc:'Beef stew in tomato sauce',grad:'from-red-500 to-orange-600'},
+            {name:'Caesar Salad',cat:'sides',price:180,desc:'Fresh greens with dressing',grad:'from-green-400 to-teal-500'},
+            {name:'French Fries',cat:'sides',price:120,desc:'Crispy golden fries',grad:'from-yellow-300 to-yellow-500'},
+            {name:'Garlic Bread',cat:'sides',price:100,desc:'Toasted garlic butter bread',grad:'from-orange-300 to-orange-500'},
+            {name:'Onion Rings',cat:'sides',price:130,desc:'Crispy battered onion rings',grad:'from-yellow-400 to-orange-400'},
+            {name:'Coleslaw',cat:'sides',price:90,desc:'Fresh cabbage salad',grad:'from-green-300 to-lime-400'},
+            {name:'Mashed Potato',cat:'sides',price:110,desc:'Creamy mashed potatoes',grad:'from-yellow-200 to-amber-300'},
+            {name:'Chocolate Cake',cat:'desserts',price:150,desc:'Rich chocolate layer cake',grad:'from-amber-600 to-orange-700'},
+            {name:'Ice Cream',cat:'desserts',price:130,desc:'Premium ice cream',grad:'from-pink-400 to-purple-500'},
+            {name:'Leche Flan',cat:'desserts',price:140,desc:'Creamy caramel custard',grad:'from-yellow-300 to-amber-400'},
+            {name:'Halo-Halo',cat:'desserts',price:160,desc:'Filipino mixed dessert',grad:'from-purple-400 to-pink-500'},
+            {name:'Brownie',cat:'desserts',price:120,desc:'Fudgy chocolate brownie',grad:'from-amber-700 to-orange-800'},
+            {name:'Fruit Salad',cat:'desserts',price:135,desc:'Mixed fruits with cream',grad:'from-orange-300 to-yellow-400'},
+            {name:'Combo A',cat:'combo',price:350,desc:'Grilled Chicken + Rice + Drink',grad:'from-purple-500 to-pink-600'},
+            {name:'Combo B',cat:'combo',price:450,desc:'Beef Steak + Rice + Salad + Drink',grad:'from-rose-400 to-pink-500'},
+            {name:'Combo C',cat:'combo',price:380,desc:'Fish Fillet + Rice + Soup + Drink',grad:'from-blue-500 to-indigo-600'},
+            {name:'Combo D',cat:'combo',price:320,desc:'Pork Chop + Fried Rice + Drink',grad:'from-cyan-400 to-blue-500'},
+            {name:'Family Combo',cat:'combo',price:1200,desc:'Good for 4-5 persons with variety',grad:'from-amber-500 to-orange-600'},
+            {name:'Party Combo',cat:'combo',price:2500,desc:'Good for 10 persons - mixed dishes',grad:'from-red-400 to-rose-500'}
+        ];
+        let cart=[];
+        let currentEventType='';
+        
+        function openBooking(eventType){
+            currentEventType=eventType;
+            document.getElementById('event-type-display').textContent=eventType;
+            document.getElementById('booking-modal').classList.remove('hidden');
+            
+            const tomorrow=new Date();
+            tomorrow.setDate(tomorrow.getDate()+1);
+            document.getElementById('booking-date').min=tomorrow.toISOString().split('T')[0];
+        }
+        
+        function closeBooking(){
+            document.getElementById('booking-modal').classList.add('hidden');
+            document.getElementById('booking-form').reset();
+        }
+        
+        function showBookingConfirmation(bookingData){
+            document.getElementById('bc-event-type').textContent=bookingData.eventType;
+            document.getElementById('bc-datetime').textContent=bookingData.datetime;
+            document.getElementById('bc-guests').textContent=bookingData.guests+' guests';
+            document.getElementById('bc-venue').textContent=bookingData.venue;
+            document.getElementById('bc-menu').textContent=bookingData.menu||'To be discussed';
+            
+            document.getElementById('bc-name').textContent=bookingData.name;
+            document.getElementById('bc-phone').textContent=bookingData.phone;
+            document.getElementById('bc-email').textContent=bookingData.email;
+            
+            document.getElementById('booking-confirmation-modal').classList.remove('hidden');
+        }
+        
+        function closeBookingConfirmation(){
+            document.getElementById('booking-confirmation-modal').classList.add('hidden');
+            location.href='#home';
+        }
+        
+        document.getElementById('booking-form').addEventListener('submit',function(e){
+            e.preventDefault();
+            
+            const date=new Date(document.getElementById('booking-date').value);
+            const time=document.getElementById('booking-time').value;
+            const menuSelect=document.getElementById('booking-menu');
+            const menuText=menuSelect.options[menuSelect.selectedIndex].text;
+            
+            const bookingData={
+                eventType:currentEventType,
+                name:document.getElementById('booking-name').value,
+                phone:document.getElementById('booking-phone').value,
+                email:document.getElementById('booking-email').value,
+                datetime:date.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' at '+time,
+                guests:document.getElementById('booking-guests').value,
+                venue:document.getElementById('booking-venue-street').value+', '+document.getElementById('booking-venue-city').value,
+                menu:menuSelect.value?menuText:'',
+                requests:document.getElementById('booking-requests').value
+            };
+            
+            closeBooking();
+            showBookingConfirmation(bookingData);
+        });
+        
+        function updateCartUI(){
+            const cartCount=document.getElementById('cart-count');
+            const cartItems=document.getElementById('cart-items');
+            const cartTotal=document.getElementById('cart-total');
+            
+            cartCount.textContent=cart.length;
+            
+            if(cart.length===0){
+                cartItems.innerHTML='<p class="text-gray-500 text-center py-8">Your cart is empty</p>';
+                cartTotal.textContent='₱0';
+                return;
+            }
+            
+            const grouped={};
+            cart.forEach(item=>{
+                if(grouped[item.name]){
+                    grouped[item.name].qty++;
+                }else{
+                    grouped[item.name]={...item,qty:1};
+                }
+            });
+            
+            cartItems.innerHTML=Object.values(grouped).map(item=>`
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-gray-900">${item.name}</h4>
+                        <p class="text-sm text-gray-600">₱${item.price} x ${item.qty}</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-green-600">₱${item.price*item.qty}</span>
+                        <button onclick="removeFromCart('${item.name}')" class="text-red-500 hover:text-red-700 ml-2">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            const total=cart.reduce((sum,item)=>sum+item.price,0);
+            cartTotal.textContent=`₱${total.toLocaleString()}`;
+        }
+        
+        function toggleCart(){
+            const sidebar=document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('translate-x-full');
+        }
+        
+        function toggleMobileMenu(){
+            const menu=document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+        
+        function showCheckout(){
+            if(cart.length===0){
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            const total=cart.reduce((sum,item)=>sum+item.price,0);
+            const hasCombo=cart.some(item=>item.cat==='combo' && item.price>=1000);
+            
+            document.getElementById('checkout-subtotal').textContent=`₱${total.toLocaleString()}`;
+            document.getElementById('checkout-total').textContent=`₱${(total+50).toLocaleString()}`;
+            
+            if(hasCombo){
+                document.getElementById('deposit-notice').classList.remove('hidden');
+            }else{
+                document.getElementById('deposit-notice').classList.add('hidden');
+            }
+            
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+        
+        function closeCheckout(){
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+        
+        function showConfirmation(orderData){
+            const grouped={};
+            cart.forEach(item=>{
+                if(grouped[item.name]){
+                    grouped[item.name].qty++;
+                }else{
+                    grouped[item.name]={...item,qty:1};
+                }
+            });
+            
+            const itemsHtml=Object.values(grouped).map(item=>`
+                <div class="flex justify-between text-gray-700">
+                    <span>${item.name} x${item.qty}</span>
+                    <span class="font-semibold">₱${(item.price*item.qty).toLocaleString()}</span>
+                </div>
+            `).join('');
+            document.getElementById('confirmation-items').innerHTML=itemsHtml;
+            
+            const subtotal=cart.reduce((sum,item)=>sum+item.price,0);
+            const total=subtotal+50;
+            document.getElementById('confirmation-subtotal').textContent=`₱${subtotal.toLocaleString()}`;
+            document.getElementById('confirmation-total').textContent=`₱${total.toLocaleString()}`;
+            
+            document.getElementById('confirmation-name').textContent=orderData.name;
+            document.getElementById('confirmation-phone').textContent=orderData.phone;
+            document.getElementById('confirmation-phone-repeat').textContent=orderData.phone;
+            document.getElementById('confirmation-address').textContent=orderData.address;
+            document.getElementById('confirmation-payment').textContent=orderData.payment;
+            
+            if(orderData.hasEvent){
+                const depositAmount=(total*0.5).toLocaleString();
+                document.getElementById('confirmation-deposit-amount').textContent=`₱${depositAmount}`;
+                document.getElementById('confirmation-deposit').classList.remove('hidden');
+            }else{
+                document.getElementById('confirmation-deposit').classList.add('hidden');
+            }
+            
+            document.getElementById('confirmation-modal').classList.remove('hidden');
+        }
+        
+        function closeConfirmation(){
+            document.getElementById('confirmation-modal').classList.add('hidden');
+            location.href='#home';
+        }
+        
+        document.getElementById('checkout-form').addEventListener('submit',function(e){
+            e.preventDefault();
+            
+            const phone=document.getElementById('phone').value;
+            const payment=document.getElementById('payment-method').value;
+            const total=cart.reduce((sum,item)=>sum+item.price,0)+50;
+            const hasCombo=cart.some(item=>item.cat==='combo' && item.price>=1000);
+            
+            if(payment==='cod' && total<550){
+                alert('Cash on Delivery requires minimum order of ₱500 (excluding delivery fee)');
+                return;
+            }
+            
+            const orderData={
+                name:document.getElementById('customer-name').value,
+                phone:phone,
+                address:`${document.getElementById('address-street').value}, ${document.getElementById('address-barangay').value}, ${document.getElementById('address-landmark').value}`,
+                payment:payment,
+                hasEvent:hasCombo
+            };
+            
+            closeCheckout();
+            toggleCart();
+            showConfirmation(orderData);
+            
+            cart=[];
+            updateCartUI();
+        });
+        
+        function render(f='all'){
+            const grid=document.getElementById('menu-grid');
+            const filtered=f==='all'?items:items.filter(i=>i.cat===f);
+            grid.innerHTML=filtered.map((i,idx)=>`<div class="menu-item bg-white rounded-xl shadow-lg overflow-hidden"><div class="h-48 bg-gradient-to-br ${i.grad}"></div><div class="p-6"><h3 class="text-2xl font-semibold mb-2">${i.name}</h3><p class="text-gray-600 mb-4">${i.desc}</p><div class="flex justify-between items-center"><span class="text-2xl font-bold text-green-600">₱${i.price}</span><button onclick="addCart(${idx},'${f}')" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Add to Cart</button></div></div></div>`).join('');
+        }
+        
+        function filterMenu(cat){
+            render(cat);
+            document.querySelectorAll('.category-btn').forEach(b=>{
+                b.className='category-btn bg-white text-green-600 px-6 py-3 rounded-full font-semibold border-2 border-green-600';
+            });
+            event.target.className='category-btn bg-green-600 text-white px-6 py-3 rounded-full font-semibold';
+        }
+        
+        function addCart(idx,f){
+            const item=f==='all'?items[idx]:items.filter(i=>i.cat===f)[idx];
+            cart.push(item);
+            updateCartUI();
+            
+            const toast=document.createElement('div');
+            toast.className='fixed top-24 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            toast.textContent=`${item.name} added to cart!`;
+            document.body.appendChild(toast);
+            setTimeout(()=>toast.remove(),2000);
+        }
+        
+        function clearCart(){
+            document.getElementById('clear-cart-modal').classList.remove('hidden');
+        }
+        
+        function closeClearCartModal(){
+            document.getElementById('clear-cart-modal').classList.add('hidden');
+        }
+        
+        function confirmClearCart(){
+            cart=[];
+            updateCartUI();
+            closeClearCartModal();
+            
+            const toast=document.createElement('div');
+            toast.className='fixed top-24 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            toast.textContent='Cart cleared successfully!';
+            document.body.appendChild(toast);
+            setTimeout(()=>toast.remove(),2000);
+        }
+        
+        function removeFromCart(name){
+            const idx=cart.findIndex(item=>item.name===name);
+            if(idx>-1){
+                cart.splice(idx,1);
+                updateCartUI();
+            }
+        }
+        
+        document.getElementById('contact-form').onsubmit=e=>{
+            e.preventDefault();
+            alert('Thank you! We will contact you soon.');
+        };
+        
+        render();
+    </script>
+</body>
+</html>
